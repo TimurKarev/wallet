@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:wallet/domain/entities/user/app_user.dart';
 import 'package:wallet/domain/repositories/auth_repository.dart';
@@ -7,32 +8,52 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 part 'auth_bloc.freezed.dart';
 
-class AuthBloc extends Bloc<AuthEvent, AuthState> {
+class AuthBloc extends Bloc<AuthEvent, AuthState> with ChangeNotifier {
   AuthBloc({required AuthRepository authRepository})
       : _authRepo = authRepository,
-        super(const AuthState.unknown()) {
-    on<_Started>(_onStarted);
+        super(const AuthState.loading()) {
+    on<_EmptyUser>((event, emitter) {
+      emitter(const AuthState.unknown());
+      notifyListeners();
+    });
+    on<_User>((event, emitter) {
+      emitter(AuthState.success(event.user));
+      notifyListeners();
+    });
     on<_SignOut>(_onSignOut);
 
-    add(const AuthEvent.started());
+    authRepository.getWalletUser().listen((event) {
+      event.fold(
+        () => add(const AuthEvent.emptyUser()),
+        (user) => add(
+          AuthEvent.user(user),
+        ),
+      );
+    });
   }
 
   final AuthRepository _authRepo;
 
-  Future<void> _onStarted(
-    _Started event,
-    Emitter<AuthState> emitter,
-  ) async {
-    emitter(const AuthState.loading());
-
-    await emitter.forEach(
-      _authRepo.getWalletUser(),
-      onData: (user) => user.fold(
-        () => const AuthState.unknown(),
-        (user) => AuthState.success(user),
-      ),
-    );
-  }
+  // Future<void> _onStarted(
+  //   _Started event,
+  //   Emitter<AuthState> emitter,
+  // ) async {
+  //   emitter(const AuthState.loading());
+  //
+  //   await emitter.forEach(
+  //     _authRepo.getWalletUser(),
+  //     onData: (user) {
+  //       Future.delayed(
+  //         const Duration(seconds: 1),
+  //         () => notifyListeners(),
+  //       );
+  //       return user.fold(
+  //         () => const AuthState.unknown(),
+  //         (user) => AuthState.success(user),
+  //       );
+  //     },
+  //   );
+  // }
 
   Future<void> _onSignOut(
     _SignOut event,
