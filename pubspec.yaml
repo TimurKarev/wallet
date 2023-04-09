@@ -11,23 +11,28 @@ dependencies:
   flutter:
     sdk: flutter
 
+  dartz: ^0.10.1
+  equatable: ^2.0.5
+
   bloc: ^8.1.1
   flutter_bloc: ^8.1.2
   bloc_concurrency: ^0.2.1
+
+  freezed_annotation: ^2.2.0
+
+  #firebase
+  firebase_core: ^2.9.0
+  firebase_auth: ^4.4.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  #flutter pub run build_runner watch —delete-conflicting-output
+  build_runner: ^2.3.3
+  freezed: ^2.3.2
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+  flutter_lints: ^2.0.0
 
 # The following section is specific to Flutter packages.
 flutter:

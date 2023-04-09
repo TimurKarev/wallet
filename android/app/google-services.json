@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1052129564127",
+    "project_id": "wallet-9b13f",
+    "storage_bucket": "wallet-9b13f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052129564127:android:88d509e011729a3863206a",
+        "android_client_info": {
+          "package_name": "timur.karev.wallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052129564127-v3uskiui8u4il2uska73t2vdsb011058.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD98eUfsJBjenkM8_eiBJI2fX2cj6OSAQE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052129564127-v3uskiui8u4il2uska73t2vdsb011058.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -23,7 +23,6 @@ linter:
     - camel_case_extensions
     - camel_case_variables
     - camel_case_extensions
-    - always_specify_types
     - prefer_int_literals
     - library_prefixes
     - prefer_generic_function_type_aliases
