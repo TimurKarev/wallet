@@ -1,0 +1,64 @@
+# Linting rules
+linter:
+  rules:
+    # Rules that enforce best practices
+    - avoid_relative_lib_imports
+    - prefer_single_quotes
+    - prefer_const_constructors
+    - always_declare_return_types
+    - prefer_typing_uninitialized_variables
+    - avoid_print
+    - avoid_redundant_argument_values
+    - use_key_in_widget_constructors
+    - avoid_catching_errors
+    - prefer_final_fields
+    - prefer_if_elements_to_conditional_expressions
+    - prefer_const_constructors_in_immutables
+    - prefer_const_literals_to_create_immutables
+    - unnecessary_new
+
+    # Rules that enforce style and formatting conventions
+    - lines_longer_than_80_chars
+    - camel_case_types
+    - camel_case_extensions
+    - camel_case_variables
+    - camel_case_extensions
+    - always_specify_types
+    - prefer_int_literals
+    - library_prefixes
+    - prefer_generic_function_type_aliases
+
+    # Rules that enforce null safety
+    - avoid_return_types_on_setters
+    - avoid_types_on_closure_parameters
+    - always_use_package_imports
+    - package_api_docs
+    - always_require_non_null_named_parameters
+    - non_constant_identifier_names
+    - prefer_constructors_over_static_methods
+    - prefer_final_locals
+    - no_implicit_dynamic
+    - prefer_is_empty
+    - prefer_generic_function_type_aliases
+    - prefer_void_to_null
+    - prefer_iterable_whereType
+
+# Analysis options
+analyzer:
+  strong-mode: true
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "build/**"
+    - "test/**"
+    - "example/**"
+    - "doc/**"
+    - "ios/**"
+    - "android/**"
+    - ".pub-cache/**"
+    - ".dart_tool/**"
+    - "packages/**"
+    - "analysis_options.yaml"
+
+# Include only necessary lints for performance
+include: package:flutter_lints/flutter.yaml
