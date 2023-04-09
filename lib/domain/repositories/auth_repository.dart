@@ -4,6 +4,6 @@ import 'package:wallet/domain/entities/user/app_user.dart';
 
 abstract class AuthRepository {
   Stream<Option<AppUser>> getWalletUser();
-  Future<Either<AuthFailure, AppUser>> signInAnonymously();
+  Future<Either<AuthFailure, Unit>> signInAnonymously();
   Future<Either<AuthFailure, Unit>> signOut();
 }

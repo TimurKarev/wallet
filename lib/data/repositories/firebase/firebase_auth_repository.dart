@@ -25,12 +25,12 @@ class FirebaseAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<Either<AuthFailure, AppUser>> signInAnonymously() async {
+  Future<Either<AuthFailure, Unit>> signInAnonymously() async {
     try {
       final UserCredential result = await _auth.signInAnonymously();
       final User? user = result.user;
       if (user != null) {
-        return right(AppUser(id: user.uid, email: ''));
+        return right(unit);
       } else {
         return left(const AuthFailure.signInFailure());
       }
