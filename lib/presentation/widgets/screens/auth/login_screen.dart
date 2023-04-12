@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wallet/presentation/blocs/auth/auth_bloc.dart';
-import 'package:wallet/presentation/blocs/auth/guest/guest_sign_in_bloc.dart';
+import 'package:wallet/presentation/blocs/auth/guest/sign_in_bloc.dart';
 import 'package:wallet/router/paths.dart' as paths;
 
 class LoginScreen extends StatelessWidget {
@@ -15,13 +15,29 @@ class LoginScreen extends StatelessWidget {
         success: (_) => GoRouter.of(context).go(paths.home),
       ),
       child: Scaffold(
-        body: Center(
-          child: TextButton(
-            onPressed: () => context.read<GuestSignInBloc>().add(
-                  const GuestSignInEvent.sign(),
-                ),
-            child: Text('LOGIN'),
-          ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextButton(
+              onPressed: () => context.read<AppleSignInBloc>().add(
+                    const SignInEvent.sign(),
+                  ),
+              child: const Text('apple'),
+            ),
+            TextButton(
+              onPressed: () => context.read<GoogleSignInBloc>().add(
+                    const SignInEvent.sign(),
+                  ),
+              child: const Text('google'),
+            ),
+            TextButton(
+              onPressed: () => context.read<GuestSignInBloc>().add(
+                    const SignInEvent.sign(),
+                  ),
+              child: const Text('guest login'),
+            ),
+          ],
         ),
       ),
     );

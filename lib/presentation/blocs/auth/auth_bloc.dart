@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:wallet/domain/entities/user/app_user.dart';
-import 'package:wallet/domain/repositories/auth_repository.dart';
+import 'package:wallet/domain/repositories/auth/auth_repository.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

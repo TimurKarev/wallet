@@ -1,8 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:wallet/domain/entities/failures/auth_failure.dart';
 import 'package:wallet/domain/entities/user/app_user.dart';
-import 'package:wallet/domain/repositories/auth_repository.dart';
+import 'package:wallet/domain/repositories/auth/auth_repository.dart';
 
 class FirebaseAuthRepository implements AuthRepository {
   final FirebaseAuth _auth;
@@ -11,7 +13,6 @@ class FirebaseAuthRepository implements AuthRepository {
 
   @override
   Stream<Option<AppUser>> getWalletUser() {
-    // Use the Firebase Auth instance to listen for changes in the authentication state
     return _auth.authStateChanges().map(
           (user) => user == null
               ? none()
@@ -37,6 +38,60 @@ class FirebaseAuthRepository implements AuthRepository {
     } catch (e) {
       // Handle any errors that occur during sign in
       return left(const AuthFailure.signInFailure());
+    }
+  }
+
+  @override
+  Future<Either<AuthFailure, Unit>> signInWithGoogle() async {
+    try {
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      // Once signed in, return the UserCredential
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      return const Right(unit); // Return success (Right)
+    } on FirebaseAuthException {
+      // Handle FirebaseAuthException
+      return const Left(AuthFailure
+          .signInFailure()); // Return failure with error message (Left)
+    } catch (e) {
+      // Handle other exceptions
+      return const Left(
+        AuthFailure.signInFailure(),
+      ); // Return failure with generic error message (Left)
+    }
+  }
+
+  @override
+  Future<Either<AuthFailure, Unit>> signInWithApple() async {
+    try {
+      final appleProvider = AppleAuthProvider();
+      if (kIsWeb) {
+        await FirebaseAuth.instance.signInWithPopup(appleProvider);
+      } else {
+        await FirebaseAuth.instance.signInWithProvider(appleProvider);
+      }
+      return const Right(unit); // Return success (Right)
+    } on FirebaseAuthException catch (_) {
+      // Handle FirebaseAuthException
+      return const Left(
+        AuthFailure.signInFailure(),
+      );
+    } catch (_) {
+      // Handle other exceptions
+      return const Left(
+        AuthFailure.signInFailure(),
+      );
     }
   }
 
