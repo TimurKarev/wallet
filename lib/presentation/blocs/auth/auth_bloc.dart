@@ -34,27 +34,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with ChangeNotifier {
 
   final AuthRepository _authRepo;
 
-  // Future<void> _onStarted(
-  //   _Started event,
-  //   Emitter<AuthState> emitter,
-  // ) async {
-  //   emitter(const AuthState.loading());
-  //
-  //   await emitter.forEach(
-  //     _authRepo.getWalletUser(),
-  //     onData: (user) {
-  //       Future.delayed(
-  //         const Duration(seconds: 1),
-  //         () => notifyListeners(),
-  //       );
-  //       return user.fold(
-  //         () => const AuthState.unknown(),
-  //         (user) => AuthState.success(user),
-  //       );
-  //     },
-  //   );
-  // }
-
   Future<void> _onSignOut(
     _SignOut event,
     Emitter<AuthState> emitter,

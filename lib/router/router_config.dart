@@ -22,6 +22,13 @@ GoRouter routerConfig(AuthBloc bloc) => GoRouter(
         ),
       ],
       redirect: (_, state) {
+        if (state.location == paths.start) {
+          return bloc.state.mapOrNull(
+            unknown: (_) => paths.login,
+            success: (_) => paths.home,
+          );
+        }
+
         if (state.location != paths.login) {
           return bloc.state.mapOrNull(
             unknown: (_) => paths.login,
